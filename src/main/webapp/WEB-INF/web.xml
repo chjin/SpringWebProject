@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<!-- 
+		1) Controller 등록
+		2) 한글 변환
+	 -->
+	
+	<!-- 
+		request.setCharactEncoding("EUC-KR");
+	 -->
+	 
+	<!-- 
+		1) tomcat 구동 ==> web.xml, server.xml
+		2) web.xml ==> DispatcherServlet 실행
+			Class.forName("org.springframework.web.servlet.DispatcherServlet")
+			Map map=new HashMap();
+			map.put("dispatcher",obj);
+		3) DispatcherServlet
+			=> init() => ApplicationContext에 클래스 관리 요청
+						 xml파일을 전송 => 파싱 => 결과를 가져 온다.
+			=> service()
+			=> destroy()
+		4) 클래스 => DAO,Model
+		=========================================
+		
+		1. 클라이언트 요청 (.do)
+						a.do => A호출
+		2. DispatcherServlet <==> HandlerMapping
+							실행후 결과값 얻기
+		3. JSP를 찾아서 request를 전송  : ViewResolver
+		4. JSP에서 출력
+													 		
+	
+	 -->
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/applicationContext.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>EUC-KR</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
+
+
+
+
+
+
+
+
+
+
+

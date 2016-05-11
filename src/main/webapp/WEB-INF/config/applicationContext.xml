@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+	<!-- 
+		1) AOP 등록
+		2) Annotation 등록
+			= DI 관련 (*)
+			= 클래스 메모리 할당 (*)
+		3) DataSource 등록 (DB 관련 정보) (*)
+		4) Transaction 등록
+		5) AOP 셋팅
+		6) lib 클래스 등록 (*)
+		7) ViewResolver 등록(*)
+		8) Security
+		9) WebSocket
+		
+		
+		Sping
+			1) DI : XML,Annotation
+			2) MVC : 구조
+			3) AOP : Transaction,Security
+			4) WebSocket
+			5) Hadoop, R, NoSQL	
+	 -->
+	 
+	 <context:annotation-config></context:annotation-config>
+	 <!-- 
+	 		DI
+	 			= setter DI		=> p:dao-ref  => setDao(DAO dao)
+	 			= 생성자 DI			=> 매개변수에 값 주입 
+	 			= Method DI		=> init-method  :  객체가 생성한 후 (드라이버 등록)
+	 							   destroy-method :  객체 소멸시 호출 (DB 닫기)
+	 			
+	 			@Autowired : 자동 주입
+	 			@PostConstruct  : init-method
+	 			@PreDestroy	  :  destroy-method
+	 			@Resource   :  특정 객체 주입 				   	
+	  -->
+	  
+	  <!-- 메모리 할당 -->
+	  <context:component-scan base-package="com.sist.*"></context:component-scan>
+	  
+	  <!-- 
+	  		클래스별 분리
+	  		@Component  :  일반 클래스 (MovieManager)
+	  		@Repository : DAO
+	  		@Service  : BO
+	  		@Controller  : Model
+	   -->
+	   
+	   <!-- JSP -->
+	   <bean id="viewResolver"
+	   		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+	   		p:prefix="/"
+	   		p:suffix=".jsp">
+	   </bean>
+	   
+	   <!-- 
+	   		return prefix +"main/input"+ suffix
+	    -->
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
